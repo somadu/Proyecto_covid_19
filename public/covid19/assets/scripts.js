@@ -1,3 +1,4 @@
+// Función con método fetch para generar la tabla de acuerdo a la data
 
 const baseUrl = "http://localhost:3000/api"
 
