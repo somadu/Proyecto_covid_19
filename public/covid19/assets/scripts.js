@@ -2,6 +2,18 @@
 
 const baseUrl = "http://localhost:3000/api"
 
+async function detalleInformacion(url){
+  const response = await fetch (url);
+  const { data } = await response.json();
+  const divDetalleInfo = document.getElementById('detalleCovid');
+  const tituloModal = document.getElementById('tituloCovid');
+  tituloModal.innerHTML = `Detalle Covid en ${data.location}`;
+  divDetalleInfo.innerHTML = `<p><strong>Casos confirmados:</strong> ${data.confirmed}</p><br>
+                              <p><strong>Casos fallecidos:</strong> ${data.deaths}</p><br>
+                              <p><strong>Casos recuperados:</strong> ${data.recovered === 0 ? 'Sin información' : data.recovered}</p><br>
+                              <p><strong>Casos activos:</strong> ${data.active === 0 ? 'Sin información' : data.active}</p><br>`;
+};
+
 async function traerInformacion(url){
     const response = await fetch (url);
     var covi = await response.json();
@@ -12,7 +24,7 @@ async function traerInformacion(url){
                 <td> ${row.location} </td>
                 <td> ${row.confirmed} </td>
                 <td> ${row.deaths} </td>
-                <td> <a href="http://localhost:3000/api/countries/${row.location}"> Ver Detalle </a></td>
+                <td> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#covidModal" onclick="detalleInformacion('${baseUrl}/countries/${row.location}')">Ver detalle</button></td>
             </td>`
         })
         $(`#js-table-covid tbody`).append(rows)
@@ -62,5 +74,5 @@ async function traerInformacion(url){
       );
     }     
 
-traerInformacion(baseUrl + `/total`)
+traerInformacion(`${baseUrl}/total`)
 

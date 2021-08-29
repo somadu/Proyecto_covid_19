@@ -9,29 +9,53 @@
 </head>
 <body>
     <body class="">
+      <!-- NavBar -->
         <div class="container">
-            <nav class="navbar navbar-dark bg-dark">
-                <a class="navbar-brand">Covid 19</a>
-                <a class="navbar-brand" href="http://localhost:3000/covid19/">Home</a>
-                <a class="navbar-brand" href="#">Iniciar Sesión</a>
-            </nav>
-            <canvas id="myChart" width="2000" height="2000"></canvas>
-            <div id="js-table-wrapper" class="col-md-12">
-                <table id="js-table-covid" class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Pais</th>
-                            <th scope="col">Casos Confirmados</th>
-                            <th scope="col">Casos Muertos</th>
-                            <th scope="col">Mas Informacion</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div> 
+          <nav class="navbar navbar-dark bg-dark">
+              <a class="navbar-brand">Covid 19</a>
+              <a class="navbar-brand" href="http://localhost:3000/covid19/">Home</a>
+              <a class="navbar-brand" href="#">Iniciar Sesión</a>
+          </nav>
         </div>
-    </body>
+
+        <!-- Cuerpo con información -->
+        <div class="container">
+          <canvas id="myChart" width="2000" height="2000"></canvas>
+          <div id="js-table-wrapper" class="col-md-12">
+              <table id="js-table-covid" class="table">
+                  <thead>
+                      <tr>
+                          <th scope="col">País</th>
+                          <th scope="col">Casos Confirmados</th>
+                          <th scope="col">Casos Muertos</th>
+                          <th scope="col">Mas Información</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+              </table>
+          </div> 
+        </div>
+      </body>
+
+      <!-- Modal -->
+      <div class="modal fade" id="covidModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="tituloCovid"></h5>
+            </div>
+            <div class="modal-body">
+              <div id="detalleCovid"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
