@@ -14,8 +14,32 @@
           <nav class="navbar navbar-dark bg-dark">
               <a class="navbar-brand">Covid 19</a>
               <a class="navbar-brand" href="http://localhost:3000/covid19/">Home</a>
-              <a class="navbar-brand" href="#">Iniciar Sesión</a>
+              <a class="navbar-brand" style="display: block;" href="#" data-toggle="modal" data-target="#login-modal" id="login">Iniciar Sesión</a>
+              <a class="navbar-brand" style="display: none;" href="#" id="situacion-chile">Situación Chile</a>
+              <a class="navbar-brand" style="display: none;" href="#" id="logout">Cerrar sesión</a>
           </nav>
+        </div>
+
+        <!-- Modal formulario Login -->
+        <div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3>Iniciar sesión</h3>
+              </div>
+              <div class="modal-body">
+                <form id="form-login">
+                  <div class="form-group">
+                    <input type="email" class="form-control" id="input-email" aria-describedby="emailHelp" placeholder="Correo electrónico">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" id="input-password" placeholder="Contraseña">
+                </div> 
+                <button type="submit" class="btn btn-primary" id="btnIngresar">Ingresar</button>
+              </form>
+              </div>
+            </div>
+        </div>
         </div>
 
         <!-- Cuerpo con información -->
@@ -38,7 +62,7 @@
         </div>
       </body>
 
-      <!-- Modal -->
+      <!-- Modal con detalle -->
       <div class="modal fade" id="covidModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
