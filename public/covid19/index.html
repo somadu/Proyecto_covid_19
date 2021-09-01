@@ -8,15 +8,24 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
-    <body class="">
       <!-- NavBar -->
         <div class="container">
-          <nav class="navbar navbar-dark bg-dark">
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
               <a class="navbar-brand">Covid 19</a>
-              <a class="navbar-brand" href="http://localhost:3000/covid19/">Home</a>
-              <a class="navbar-brand" style="display: block;" href="#" data-toggle="modal" data-target="#login-modal" id="login">Iniciar Sesión</a>
-              <a class="navbar-brand" style="display: none;" href="#" id="situacion-chile">Situación Chile</a>
-              <a class="navbar-brand" style="display: none;" href="#" id="logout">Cerrar sesión</a>
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" style="display: block;" href="#" data-toggle="modal" data-target="#login-modal" id="login">Iniciar Sesión</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" style="display: none;" href="chile.html" id="situacion-chile">Situación Chile</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" style="display: none;" href="#" id="logout">Cerrar sesión</a>
+                  </li>
+                  </ul>
           </nav>
         </div>
 
@@ -60,7 +69,6 @@
               </table>
           </div> 
         </div>
-      </body>
 
       <!-- Modal con detalle -->
       <div class="modal fade" id="covidModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

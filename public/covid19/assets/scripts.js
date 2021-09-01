@@ -2,6 +2,23 @@
 
 const baseUrl = "http://localhost:3000/api"
 
+const token = localStorage.getItem('jwt-token');
+
+if (token) {
+  hideShowNavBar(token);
+}
+
+console.log(window.location.pathname);
+
+
+const pathName = window.location.pathname;
+
+if (pathName === '/covid19/index.html') {
+  traerInformacion(`${baseUrl}/total`);
+} else {
+  console.log('detalle información Chile');
+}
+
 
 $('#form-login').submit(async(event) => {
   event.preventDefault();
@@ -118,5 +135,6 @@ async function traerInformacion(url){
       );
     }     
 
-traerInformacion(`${baseUrl}/total`)
+
+
 
