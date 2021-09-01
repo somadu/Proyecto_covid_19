@@ -2,15 +2,14 @@
 
 const baseUrl = "http://localhost:3000/api"
 
-
 $('#form-login').submit(async(event) => {
   event.preventDefault();
   const email = document.getElementById('input-email').value;
   const password = document.getElementById('input-password').value;
-  console.log(email, password);
   const JWT = await postData(email, password);
-  console.log(JWT);
   hideShowNavBar(JWT);
+
+  // informacionChile(`${baseUrl}/confirmed`, `${baseUrl}/deaths`, `${baseUrl}/recovered`)
 });
 
 //Enviar credenciales y obtener token
@@ -33,7 +32,6 @@ const postData = async(email, password) => {
 function hideShowNavBar(jwt) {
   try {
     if (jwt !== '') {
-      console.log('pasamos');
       $('#login').toggle();
       $('#situacion-chile').toggle();
       $('#logout').toggle();
@@ -81,21 +79,21 @@ async function traerInformacion(url){
       datasets: [{
         label: 'Casos Activos',
         data: covi.data.map(x => Math.floor(Math.random() * 3000000)),
-        backgroundColor: 'rgba(34, 139, 34, 0.2)',
+        backgroundColor: 'rgba(34, 139, 34)',
         borderColor: 'rgb(0, 0, 0)',
         borderWidth: 0
       },
       {
         label: 'Casos Confirmados',
         data: covi.data.map(x => x.confirmed),
-        backgroundColor: 'rgba(255, 140, 0, 0.2)',
+        backgroundColor: 'rgba(255, 140, 0)',
         borderColor: 'rgb(0, 0, 0)',
         borderWidth: 0
       },
       {
         label: 'Casos Muertos',
         data: covi.data.map(x => x.deaths),
-        backgroundColor: 'rgba(220, 20, 60 0.2)',
+        backgroundColor: 'rgba(220, 20, 60)',
         borderColor: 'rgb(0, 0, 0)',
         borderWidth: 0
       }]
@@ -116,7 +114,108 @@ async function traerInformacion(url){
         document.getElementById('myChart'),
         config
       );
-    }     
 
+  //Grafico Chile
+  const chartDataChile = {
+    labels: filtro.map(x => x.location),
+    datasets: [{
+      label: 'Casos Confirmados',
+      data: covi.data.map(x => Math.floor(Math.random() * 3000000)),
+      fill: false,
+      borderColor: 'rgb(255, 140, 0)',
+      tension: 0.1
+    },
+    {
+      label: 'Casos Muertos',
+      data: covi.data.map(x => x.confirmed),
+      fill: false,
+      borderColor: 'rgb(220, 20, 60)',
+      tension: 0.1
+    },
+    {
+      label: 'Casos Activos',
+      data: covi.data.map(x => x.deaths),
+      fill: false,
+      borderColor: 'rgb(34, 139, 34)',
+      tension: 0.1
+    }]
+  };
+
+  const configChile = {
+    type: 'line',
+    data: chartDataChile,
+  };
+  var myChartChile = new Chart(
+      document.getElementById('myChartChile'),
+      configChile
+  );
+
+}
+
+
+async function informacionChile(){
+  
+  var jwt = localStorage.getItem('jwt-token')
+
+//Informacion de confirmados//
+  const getConfirmed = async (jwt) => {
+      try {
+        const response = await fetch('http://localhost:3000/api/confirmed',
+    {
+          method:'GET',
+          headers: {
+            Authorization: `Bearer ${jwt}`
+          }
+      })
+        const {data} = await response.json()
+        return data
+    } catch (err) {
+      console.error(`Error: ${err}`)
+    }
+  }
+
+//informacion de muertos//
+  const getDeaths = async (jwt) => {
+      try {
+        const response = await fetch('http://localhost:3000/api/deaths',
+    {
+          method:'GET',
+          headers: {
+            Authorization: `Bearer ${jwt}`
+          }
+      })
+        const {data} = await response.json()
+        return data
+    } catch (err) {
+      console.error(`Error: ${err}`)
+    }
+  }
+
+//informacion de recuperados//
+  const getRecovered = async (jwt) => {
+      try {
+        const response = await fetch('http://localhost:3000/api/recovered',
+  {
+          method:'GET',
+          headers: {
+            Authorization: `Bearer ${jwt}`
+          }
+      })
+        const {data} = await response.json()
+        return data
+    } catch (err) {
+      console.error(`Error: ${err}`)
+    }
+  }
+  getConfirmed(jwt);
+  getDeaths(jwt);
+  getRecovered(jwt);
+}
+
+  
 traerInformacion(`${baseUrl}/total`)
+
+informacionChile()
+
+
 
