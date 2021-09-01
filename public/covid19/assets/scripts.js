@@ -9,6 +9,7 @@ if (token) {
 }
 
 const pathName = window.location.pathname;
+console.log(pathName);
 
 if (pathName === '/covid19/index.html' || pathName === '/covid19/') {
   traerInformacion(`${baseUrl}/total`);
@@ -29,7 +30,7 @@ $('#form-login').submit(async(event) => {
   const email = document.getElementById('input-email').value;
   const password = document.getElementById('input-password').value;
   const JWT = await postData(email, password);
-  hideShowNavBar(JWT);
+
 
   // informacionChile(`${baseUrl}/confirmed`, `${baseUrl}/deaths`, `${baseUrl}/recovered`)
 });
@@ -43,8 +44,15 @@ const postData = async(email, password) => {
       body: JSON.stringify({email:email, password:password})
     })
     const {token} = await response.json();
-    localStorage.setItem('jwt-token', token);
-    return token;
+    console.log(token);
+
+    if (token !== undefined) {
+      localStorage.setItem('jwt-token', token);
+      hideShowNavBar(token);
+      return token;
+    } else {
+      alert('Usuario o contraseña inválidos. Intente nuevamente.');
+    }
   } catch (error) {
     console.log(`Error: ${error}`);
   }
