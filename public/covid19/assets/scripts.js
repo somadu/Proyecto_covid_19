@@ -8,17 +8,21 @@ if (token) {
   hideShowNavBar(token);
 }
 
-console.log(window.location.pathname);
-
-
 const pathName = window.location.pathname;
 
-if (pathName === '/covid19/index.html') {
+if (pathName === '/covid19/index.html' || pathName === '/covid19/') {
   traerInformacion(`${baseUrl}/total`);
 } else {
-  console.log('detalle información Chile');
+  informacionChile();
 }
 
+const btnLogout = document.getElementById('logout');
+
+btnLogout.addEventListener('click', function(event){
+  event.preventDefault();
+  localStorage.removeItem('jwt-token');
+  window.location.href = '/covid19/index.html';
+});
 
 $('#form-login').submit(async(event) => {
   event.preventDefault();
@@ -231,11 +235,3 @@ async function informacionChile(){
   getDeaths(jwt);
   getRecovered(jwt);
 }
-
-  
-traerInformacion(`${baseUrl}/total`)
-
-informacionChile()
-
-
-
