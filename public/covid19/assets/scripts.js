@@ -138,51 +138,14 @@ async function traerInformacion(url){
       );
 
 
-
-  //Grafico Chile
-  const chartDataChile = {
-    labels: filtro.map(x => x.location),
-    datasets: [{
-      label: 'Casos Confirmados',
-      data: covi.data.map(x => Math.floor(Math.random() * 3000000)),
-      fill: false,
-      borderColor: 'rgb(255, 140, 0)',
-      tension: 0.1
-    },
-    {
-      label: 'Casos Muertos',
-      data: covi.data.map(x => x.confirmed),
-      fill: false,
-      borderColor: 'rgb(220, 20, 60)',
-      tension: 0.1
-    },
-    {
-      label: 'Casos Activos',
-      data: covi.data.map(x => x.deaths),
-      fill: false,
-      borderColor: 'rgb(34, 139, 34)',
-      tension: 0.1
-    }]
-  };
-
-  const configChile = {
-    type: 'line',
-    data: chartDataChile,
-  };
-  var myChartChile = new Chart(
-      document.getElementById('myChartChile'),
-      configChile
-  );
-
 }
 
-
 async function informacionChile(){
-  
-  var jwt = localStorage.getItem('jwt-token')
 
-//Informacion de confirmados//
-  const getConfirmed = async (jwt) => {
+  const jwt = localStorage.getItem('jwt-token')
+
+  //Informacion de confirmados//
+    const getConfirmed = async (jwt) => {
       try {
         const response = await fetch('http://localhost:3000/api/confirmed',
     {
@@ -199,7 +162,7 @@ async function informacionChile(){
   }
 
 //informacion de muertos//
-  const getDeaths = async (jwt) => {
+    const getDeaths = async (jwt) => {
       try {
         const response = await fetch('http://localhost:3000/api/deaths',
     {
@@ -216,10 +179,10 @@ async function informacionChile(){
   }
 
 //informacion de recuperados//
-  const getRecovered = async (jwt) => {
+    const getRecovered = async (jwt) => {
       try {
         const response = await fetch('http://localhost:3000/api/recovered',
-  {
+    {
           method:'GET',
           headers: {
             Authorization: `Bearer ${jwt}`
@@ -231,7 +194,46 @@ async function informacionChile(){
       console.error(`Error: ${err}`)
     }
   }
-  getConfirmed(jwt);
-  getDeaths(jwt);
-  getRecovered(jwt);
+
+  const confirmed = await getConfirmed(jwt)
+  const deaths = await getDeaths(jwt)
+  const recovered = await getRecovered(jwt)
+  
+  //Grafico Chile
+  const chartDataChile = {
+    labels: confirmed.map(x => x.date),
+    datasets: [{
+      label: 'Casos Confirmados',
+      data: confirmed.map(x => x.total),
+      fill: false,
+      borderColor: 'rgb(255, 140, 0)',
+      tension: 0.1
+    },
+    {
+      label: 'Casos Muertos',
+      data: deaths.map(x => x.total),
+      fill: false,
+      borderColor: 'rgb(220, 20, 60)',
+      tension: 0.1
+    },
+    {
+      label: 'Casos Activos',
+      data: recovered.map(x => x.total),
+      fill: false,
+      borderColor: 'rgb(34, 139, 34)',
+      tension: 0.1
+    }]
+  };
+
+  const configChile = {
+    type: 'line',
+    data: chartDataChile,
+  };
+
+  var myChartChile = new Chart(
+    document.getElementById('myChartChile'),
+    configChile
+  );
 }
+
+ 
