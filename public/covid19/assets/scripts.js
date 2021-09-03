@@ -78,15 +78,20 @@ async function detalleInformacion(url){
   const response = await fetch (url);
   const { data } = await response.json();
   const tituloModal = document.getElementById('tituloCovid');
-  tituloModal.innerHTML = `Detalle Covid en ${data.location}`;
-
-  const dataGrafico = [
-    {y: data.confirmed, label: 'Casos confirmados'},
-    {y: data.deaths, label: 'Casos fallecidos'},
-  ]
-
-  graficoModal(dataGrafico);
-
+  const detallePais = document.getElementById('detalleCovid');
+  if (Object.keys(data).length > 0) {
+    tituloModal.innerHTML = `Detalle Covid en ${data.location}`;
+    detallePais.style.height = '300px';
+    const dataGrafico = [
+      {y: data.confirmed, label: 'Casos confirmados'},
+      {y: data.deaths, label: 'Casos fallecidos'},
+    ];
+    graficoModal(dataGrafico);
+  } else {
+    tituloModal.innerHTML = `Detalle Covid`;
+    detallePais.innerHTML= `<h5>No disponemos de la información en este momento.</h5>`;
+    detallePais.style.height = '100px';
+  }
 };
 
 
