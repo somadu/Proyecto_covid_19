@@ -77,13 +77,36 @@ function hideShowNavBar(jwt) {
 async function detalleInformacion(url){
   const response = await fetch (url);
   const { data } = await response.json();
-  const divDetalleInfo = document.getElementById('detalleCovid');
   const tituloModal = document.getElementById('tituloCovid');
   tituloModal.innerHTML = `Detalle Covid en ${data.location}`;
-  divDetalleInfo.innerHTML = `<p><strong>Casos confirmados:</strong> ${data.confirmed}</p><br>
-                              <p><strong>Casos fallecidos:</strong> ${data.deaths}</p><br>
-                              <p><strong>Casos recuperados:</strong> ${data.recovered === 0 ? 'Sin información' : data.recovered}</p><br>
-                              <p><strong>Casos activos:</strong> ${data.active === 0 ? 'Sin información' : data.active}</p><br>`;
+
+  const dataGrafico = [
+    {y: data.confirmed, label: 'Casos confirmados'},
+    {y: data.deaths, label: 'Casos fallecidos'},
+  ]
+
+  graficoModal(dataGrafico);
+
+};
+
+
+function graficoModal(data){
+  let chart = new CanvasJS.Chart("detalleCovid", {
+    exportEnabled: true,
+    animationEnabled: true,
+    theme: "light1",
+    axisY: {
+      includeZero: true
+    },
+    data: [{
+      type: "column",
+      indexLabelFontColor: "#5A5757",
+      indexLabelFontSize: 16,
+      indexLabelPlacement: "outside",
+      dataPoints: data,
+    }]
+  });
+  chart.render();
 };
 
 async function traerInformacion(url){
@@ -243,5 +266,3 @@ async function informacionChile(){
     configChile
   );
 }
-
- 
